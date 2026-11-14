@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>weBasis · HTML, CSS y JavaScript para diseñadores</title>
+  <meta name="description" content="Un laboratorio minimalista para que diseñadores experimenten con HTML, CSS y JavaScript, con explicaciones en tarjetas y audio.">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="4" y="74" font-size="56" font-family="monospace" font-weight="bold">&gt;_</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="#top">weBasis<span aria-hidden="true">_</span></a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#html" data-section="html">HTML</a>
+      <a href="#css" data-section="css">CSS</a>
+      <a href="#js" data-section="js">JavaScript</a>
+      <a href="#docs" data-section="docs">Aprender</a>
+    </nav>
+    <div class="topbar-actions">
+      <button id="stop-audio" class="btn small ghost" type="button" hidden>⏹ Detener audio</button>
+      <button id="open-settings" class="btn small" type="button">// Personalizar</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ══════════ Portada ══════════ -->
+  <section class="hero container">
+    <h1>Un sitio seguro para <em>romper</em> cosas</h1>
+    <div class="hero-actions">
+      <a class="btn" href="#html">Empezar con HTML ↓</a>
+      <button class="btn ghost" type="button" data-say="Te doy la bienvenida a weBasis, un espacio para que experimentes con HTML, CSS y JavaScript. Edita, rompe, repara y repite: así se aprende.">🔊 Escuchar intro</button>
+    </div>
+  </section>
+
+  <!-- ══════════ HTML ══════════ -->
+  <section id="html" class="section container">
+    <header class="section-head">
+      <span class="num">01</span>
+      <div>
+        <h2>HTML · la estructura</h2>
+        <p class="lead">Las piezas de tu página. Edita a la izquierda, mira el resultado a la derecha.</p>
+        <button class="listen-mini" type="button" data-say="HTML es el esqueleto de la web. Con etiquetas describes la estructura: cajas, títulos, párrafos, imágenes, enlaces y botones. El navegador lee esas etiquetas y construye la página. Edita el código y observa la vista previa en vivo.">🔊 ¿Qué es HTML?</button>
+      </div>
+    </header>
+
+    <div class="playground">
+      <div class="pane">
+        <div class="pane-head">
+          <span class="label">editor.html</span>
+          <div class="pane-actions" id="html-lessons"></div>
+        </div>
+        <textarea id="html-editor" spellcheck="false" aria-label="Editor de HTML"></textarea>
+      </div>
+      <div class="pane">
+        <div class="pane-head">
+          <span class="label">vista previa · en vivo</span>
+          <button class="icon-btn" type="button" data-copy="html" title="Copiar código">⧉</button>
+        </div>
+        <iframe id="html-preview" sandbox="allow-scripts" title="Vista previa de HTML"></iframe>
+      </div>
+    </div>
+
+    <h3 class="cards-title">Tarjetas de propiedades <small>— pulsa 🔊 para escuchar</small></h3>
+    <div class="cards" id="cards-html"></div>
+  </section>
+
+  <!-- ══════════ CSS ══════════ -->
+  <section id="css" class="section container">
+    <header class="section-head">
+      <span class="num">02</span>
+      <div>
+        <h2>CSS · el estilo</h2>
+        <p class="lead">Mueve los controles y el código se escribe solo: léelo y apréndelo.</p>
+        <button class="listen-mini" type="button" data-say="CSS es el lenguaje del estilo. Con reglas como color, padding o border-radius le dices al navegador cómo se ve cada pieza: colores, tipografía, espacios, sombras y movimiento. Mueve los controles y el código se escribe solo: así aprendes leyendo.">🔊 ¿Qué es CSS?</button>
+      </div>
+    </header>
+
+    <div class="playground css-playground">
+      <div class="css-side">
+        <div class="pane">
+          <div class="pane-head">
+            <span class="label">controles</span>
+            <div class="pane-actions" id="css-lessons"></div>
+          </div>
+          <div class="controls">
+            <div class="control-row">
+              <label for="css-color">Texto <output id="css-color-out"></output></label>
+              <input type="color" id="css-color" value="#1f1b34">
+            </div>
+            <div class="control-row">
+              <label for="css-bg">Fondo <output id="css-bg-out"></output></label>
+              <input type="color" id="css-bg" value="#eae4ff">
+            </div>
+            <div class="control-row">
+              <label for="css-size">Tamaño <output id="css-size-out">18px</output></label>
+              <input type="range" id="css-size" min="12" max="36" value="18">
+            </div>
+            <div class="control-row">
+              <label for="css-padding">Padding <output id="css-padding-out">24px</output></label>
+              <input type="range" id="css-padding" min="8" max="48" value="24">
+            </div>
+            <div class="control-row">
+              <label for="css-radius">Radio <output id="css-radius-out">16px</output></label>
+              <input type="range" id="css-radius" min="0" max="48" value="16">
+            </div>
+            <div class="control-row">
+              <label for="css-shadow">Sombra <output id="css-shadow-out">18</output></label>
+              <input type="range" id="css-shadow" min="0" max="40" value="18">
+            </div>
+            <div class="control-row toggles">
+              <label><input type="checkbox" id="css-center"> Centrar contenido (flex)</label>
+              <label><input type="checkbox" id="css-hover"> Efecto al pasar el mouse (:hover)</label>
+            </div>
+            <div class="control-row">
+              <button class="btn small ghost" id="css-reset" type="button">↺ Restablecer estilo</button>
+            </div>
+          </div>
+        </div>
+        <div class="pane">
+          <div class="pane-head">
+            <span class="label">style.css · generado</span>
+            <button class="icon-btn" type="button" data-copy="css" title="Copiar CSS">⧉</button>
+          </div>
+          <pre class="code" id="css-code"></pre>
+        </div>
+      </div>
+      <div class="pane">
+        <div class="pane-head"><span class="label">vista previa</span></div>
+        <div class="css-stage">
+          <div id="css-demo">
+            <h3>Una tarjeta</h3>
+            <p>Mueve los controles y mira cómo cambia al instante.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="cards-title">Tarjetas de propiedades <small>— pulsa 🔊 para escuchar</small></h3>
+    <div class="cards" id="cards-css"></div>
+  </section>
+
+  <!-- ══════════ JavaScript ══════════ -->
+  <section id="js" class="section container">
+    <header class="section-head">
+      <span class="num">03</span>
+      <div>
+        <h2>JavaScript · el comportamiento</h2>
+        <p class="lead">El lenguaje que piensa: guarda datos, decide y reacciona. Escribe y pulsa ▶ Ejecutar.</p>
+        <button class="listen-mini" type="button" data-say="JavaScript es el comportamiento. Es el único de los tres lenguajes que piensa: guarda datos, toma decisiones y reacciona cuando alguien hace clic. Escribe código y pulsa ejecutar; los resultados aparecen en la consola y los elementos en la zona de pruebas.">🔊 ¿Qué es JavaScript?</button>
+      </div>
+    </header>
+
+    <div class="playground">
+      <div class="pane">
+        <div class="pane-head">
+          <span class="label">editor.js</span>
+          <div class="pane-actions" id="js-lessons"></div>
+        </div>
+        <textarea id="js-editor" spellcheck="false" aria-label="Editor de JavaScript"></textarea>
+        <div class="editor-foot">
+          <button class="btn" id="js-run" type="button">▶ Ejecutar</button>
+          <span class="hint">⌘/Ctrl + Enter</span>
+          <button class="icon-btn" type="button" data-copy="js" title="Copiar código" style="margin-left:auto">⧉</button>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="pane">
+          <div class="pane-head">
+            <span class="label">consola</span>
+            <button class="icon-btn" type="button" id="js-clear" title="Limpiar consola">✕</button>
+          </div>
+          <div id="js-console" class="console" aria-live="polite"></div>
+        </div>
+        <div class="pane">
+          <div class="pane-head"><span class="label">zona de pruebas · elementos creados por tu código</span></div>
+          <div id="js-sandbox" class="sandbox"><p class="hint-text">Aquí aparecerán los elementos que crees con JavaScript 👇</p></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="cards-title">Tarjetas de conceptos <small>— pulsa 🔊 para escuchar</small></h3>
+    <div class="cards" id="cards-js"></div>
+  </section>
+
+  <!-- ══════════ Documentación ══════════ -->
+  <section id="docs" class="section container">
+    <header class="section-head">
+      <span class="num">04</span>
+      <div>
+        <h2>Para seguir aprendiendo</h2>
+        <p class="lead">Una lista curada y honesta. Empieza por MDN, juega con Flexbox Froggy y practica con diseños reales.</p>
+      </div>
+    </header>
+
+    <div class="docs">
+      <a class="doc" href="https://developer.mozilla.org/es/" target="_blank" rel="noopener">
+        <span class="doc-name">MDN Web Docs <span class="arrow">↗</span></span>
+        <span class="doc-desc">La referencia oficial de HTML, CSS y JS, en español. Tu nueva mejor amiga.</span>
+        <span class="tag">Referencia</span>
+      </a>
+      <a class="doc" href="https://es.javascript.info/" target="_blank" rel="noopener">
+        <span class="doc-name">JavaScript.info <span class="arrow">↗</span></span>
+        <span class="doc-desc">El libro moderno de JavaScript, gratis y traducido al español.</span>
+        <span class="tag">Curso</span>
+      </a>
+      <a class="doc" href="https://web.dev/learn" target="_blank" rel="noopener">
+        <span class="doc-name">web.dev · Learn <span class="arrow">↗</span></span>
+        <span class="doc-desc">Cursos de HTML, CSS y accesibilidad del equipo de Chrome.</span>
+        <span class="tag">Curso</span>
+      </a>
+      <a class="doc" href="https://css-tricks.com/" target="_blank" rel="noopener">
+        <span class="doc-name">CSS-Tricks <span class="arrow">↗</span></span>
+        <span class="doc-desc">Guías visuales legendarias de flexbox, grid y trucos de CSS.</span>
+        <span class="tag">Guías</span>
+      </a>
+      <a class="doc" href="https://flexboxfroggy.com/#es" target="_blank" rel="noopener">
+        <span class="doc-name">Flexbox Froggy <span class="arrow">↗</span></span>
+        <span class="doc-desc">Aprende flexbox jugando: lleva las ranas a sus nenúfares.</span>
+        <span class="tag">Juego</span>
+      </a>
+      <a class="doc" href="https://cssgridgarden.com/#es" target="_blank" rel="noopener">
+        <span class="doc-name">Grid Garden <span class="arrow">↗</span></span>
+        <span class="doc-desc">Aprende CSS Grid riegoando zanahorias en tu huerto.</span>
+        <span class="tag">Juego</span>
+      </a>
+      <a class="doc" href="https://www.freecodecamp.org/espanol/" target="_blank" rel="noopener">
+        <span class="doc-name">freeCodeCamp <span class="arrow">↗</span></span>
+        <span class="doc-desc">Currículo completo y gratuito con certificaciones, en español.</span>
+        <span class="tag">Curso</span>
+      </a>
+      <a class="doc" href="https://www.theodinproject.com/" target="_blank" rel="noopener">
+        <span class="doc-name">The Odin Project <span class="arrow">↗</span></span>
+        <span class="doc-desc">Ruta de estudio de desarrollo web de principio a fin.</span>
+        <span class="tag">Curso</span>
+      </a>
+      <a class="doc" href="https://caniuse.com/" target="_blank" rel="noopener">
+        <span class="doc-name">Can I Use <span class="arrow">↗</span></span>
+        <span class="doc-desc">Comprueba qué navegadores soportan cada propiedad antes de usarla.</span>
+        <span class="tag">Compatibilidad</span>
+      </a>
+      <a class="doc" href="https://www.frontendmentor.io/" target="_blank" rel="noopener">
+        <span class="doc-name">Frontend Mentor <span class="arrow">↗</span></span>
+        <span class="doc-desc">Retos con diseños reales para practicar HTML, CSS y JS.</span>
+        <span class="tag">Práctica</span>
+      </a>
+      <a class="doc" href="https://www.a11yproject.com/" target="_blank" rel="noopener">
+        <span class="doc-name">The A11y Project <span class="arrow">↗</span></span>
+        <span class="doc-desc">Accesibilidad web explicada en simples: diseña para todos.</span>
+        <span class="tag">Accesibilidad</span>
+      </a>
+      <a class="doc" href="https://cssreference.io/" target="_blank" rel="noopener">
+        <span class="doc-name">CSS Reference <span class="arrow">↗</span></span>
+        <span class="doc-desc">Guía visual de cada propiedad de CSS, con ejemplos animados.</span>
+        <span class="tag">Referencia</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p class="foot-main">Hecho con amor por <strong>Lott Campuzano</strong> y <strong>OpenCode</strong><span class="heart" aria-hidden="true"> ♥</span></p>
+    <p class="foot-links"><!-- cambia el href por tu perfil de GitHub --><a href="https://github.com/tu-usuario" target="_blank" rel="noopener">Mi GitHub ↗</a></p>
+    <p class="foot-sub">weBasis · para diseñadores que crean la web //</p>
+  </div>
+</footer>
+
+<!-- ══════════ Panel de personalización ══════════ -->
+<aside id="settings" class="settings" aria-label="Panel de personalización">
+  <div class="settings-head">
+    <h3>Personalizar</h3>
+    <button class="icon-btn" type="button" id="settings-close" aria-label="Cerrar panel">✕</button>
+  </div>
+  <p class="settings-note">Todo se guarda en tu navegador. Tu espacio, tus reglas.</p>
+
+  <div class="control">
+    <span class="control-label">Tema</span>
+    <div class="segmented" id="theme-seg">
+      <button type="button" data-theme-opt="light">☀️ Claro</button>
+      <button type="button" data-theme-opt="dark">🌙 Oscuro</button>
+    </div>
+  </div>
+
+  <div class="control">
+    <span class="control-label">Color de acento</span>
+    <div class="swatches" id="swatches">
+      <button type="button" class="swatch" style="--sw:#ff8000" data-accent="#ff8000" aria-label="Papaya"></button>
+      <button type="button" class="swatch" style="--sw:#e8590c" data-accent="#e8590c" aria-label="Brasa"></button>
+      <button type="button" class="swatch" style="--sw:#ffb703" data-accent="#ffb703" aria-label="Miel"></button>
+      <button type="button" class="swatch" style="--sw:#d6336c" data-accent="#d6336c" aria-label="Frambuesa"></button>
+      <button type="button" class="swatch" style="--sw:#1098ad" data-accent="#1098ad" aria-label="Cian"></button>
+      <button type="button" class="swatch" style="--sw:#343a40" data-accent="#343a40" aria-label="Humo"></button>
+      <label class="swatch custom" title="Color personalizado">
+        <input type="color" id="accent-input" value="#ff8000"><span>＋</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="control">
+    <label class="control-label" for="font-select">Tipografía</label>
+    <select id="font-select">
+      <option value="sans">Helvetica · neutra</option>
+      <option value="serif">Editorial · serif</option>
+      <option value="mono">JetBrains · mono</option>
+    </select>
+  </div>
+
+  <div class="control">
+    <label class="control-label" for="radius-range">Esquinas <output id="radius-out">12px</output></label>
+    <input type="range" id="radius-range" min="0" max="24" value="12">
+  </div>
+
+  <div class="control">
+    <label class="control-label" for="size-range">Texto base <output id="size-out">16px</output></label>
+    <input type="range" id="size-range" min="14" max="20" value="16">
+  </div>
+
+  <button class="btn ghost" id="settings-reset" type="button">↺ Restablecer todo</button>
+</aside>
+<div id="overlay" hidden></div>
+
+</body>
+</html>

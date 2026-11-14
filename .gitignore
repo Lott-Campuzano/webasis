@@ -1,0 +1,7 @@
+# sistema
+.DS_Store
+
+# otros proyectos que viven en esta carpeta (no son parte de weBasis)
+/informe-limpieza/
+/oc1-studio/
+/oc1-studio-landing/
