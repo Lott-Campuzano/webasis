@@ -22,13 +22,16 @@ function loadJson(key) {
 }
 
 /* ═══════════════ Personalización ═══════════════ */
-const SETTINGS_KEY = 'webasis:settings:v1';
+const SETTINGS_KEY = 'webasis:settings:v2';
 const FONTS = {
   sans: "'Helvetica Neue', Helvetica, Arial, sans-serif",
   serif: "Georgia, 'Iowan Old Style', 'Times New Roman', serif",
   mono: "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
 };
-const SETTINGS_DEFAULTS = { theme: 'light', accent: '#ff8000', font: 'sans', radius: 12, size: 16 };
+const SETTINGS_DEFAULTS = { theme: 'auto', accent: '#ff5300', font: 'sans', radius: 12, size: 16 };
+const THEME_ORDER = ['auto', 'dark', 'light'];
+const THEME_LABEL = { auto: 'AUTO', dark: 'DARK', light: 'LIGHT' };
+const THEME_DOT = { auto: 'dot-green', dark: 'dot-white', light: 'dot-orange' };
 let settings = { ...SETTINGS_DEFAULTS };
 
 function loadSettings() {
@@ -39,9 +42,16 @@ function persistSettings() {
   try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch { /* sin almacenamiento */ }
 }
 
+const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+function effTheme() {
+  if (settings.theme === 'auto') return systemDark.matches ? 'dark' : 'light';
+  return settings.theme;
+}
+
 function applySettings() {
   const root = document.documentElement;
-  root.dataset.theme = settings.theme;
+  root.dataset.theme = effTheme();
   root.style.setProperty('--accent', settings.accent);
   root.style.setProperty('--radius', settings.radius + 'px');
   root.style.setProperty('--size', settings.size + 'px');
@@ -57,8 +67,13 @@ function applySettings() {
   if (rad) { rad.value = settings.radius; $('#radius-out').textContent = settings.radius + 'px'; }
   const siz = $('#size-range');
   if (siz) { siz.value = settings.size; $('#size-out').textContent = settings.size + 'px'; }
-  $$('#theme-seg button').forEach((b) =>
-    b.classList.toggle('active', b.dataset.themeOpt === settings.theme));
+
+  const dot = $('#theme-dot');
+  const label = $('#theme-label');
+  if (dot) {
+    dot.className = 'dot ' + THEME_DOT[settings.theme];
+  }
+  if (label) label.textContent = THEME_LABEL[settings.theme];
 }
 
 function openSettings() { $('#settings').classList.add('open'); $('#overlay').hidden = false; }
@@ -70,9 +85,14 @@ function bindSettings() {
   $('#overlay').addEventListener('click', closeSettings);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSettings(); });
 
-  $$('#theme-seg button').forEach((b) => b.addEventListener('click', () => {
-    settings.theme = b.dataset.themeOpt; persistSettings(); applySettings();
-  }));
+  $('#theme-cycle').addEventListener('click', () => {
+    const next = THEME_ORDER[(THEME_ORDER.indexOf(settings.theme) + 1) % THEME_ORDER.length];
+    settings.theme = next; persistSettings(); applySettings();
+    toast('apariencia: ' + THEME_LABEL[next] + ' //');
+  });
+  systemDark.addEventListener('change', () => {
+    if (settings.theme === 'auto') applySettings();
+  });
   $$('#swatches .swatch[data-accent]').forEach((b) => b.addEventListener('click', () => {
     settings.accent = b.dataset.accent; persistSettings(); applySettings();
   }));
@@ -137,7 +157,7 @@ const HTML_CARDS = [
 
 const CSS_CARDS = [
   { t: 'color', d: 'El color del texto. Acepta nombres (tomato), hex (#ff5c8a) o rgb(). El contraste con el fondo es clave para leer bien.', ex: 'p {\n  color: #ff5c8a;\n}' },
-  { t: 'background', d: 'El fondo de un elemento: color sólido, degradado o imagen. Es el lienzo sobre el que diseñas.', ex: 'button {\n  background: linear-gradient(135deg, #ff8000, #ffb703);\n}' },
+  { t: 'background', d: 'El fondo de un elemento: color sólido, degradado o imagen. Es el lienzo sobre el que diseñas.', ex: 'button {\n  background: linear-gradient(135deg, #ff5300, #00a8ff);\n}' },
   { t: 'font-family y font-size', d: 'La tipografía: familia y tamaño. Ojo: botones e inputs no heredan la fuente del body.', ex: 'body {\n  font-family: system-ui, sans-serif;\n  font-size: 16px;\n}' },
   { t: 'padding vs margin', d: 'padding es el aire dentro de la caja; margin, el aire fuera, entre cajas.', ex: '.tarjeta {\n  padding: 24px;   /* dentro */\n  margin: 32px 0;  /* fuera */\n}' },
   { t: 'border-radius', d: 'Redondea las esquinas. Con un valor muy grande (999px) conviertes un rectángulo en una píldora.', ex: 'button {\n  border-radius: 999px;\n}' },
@@ -256,10 +276,10 @@ function htmlDoc(body) {
 <style>
   body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#2b2a26;padding:24px;line-height:1.65;margin:0}
   img{max-width:100%;height:auto;border-radius:8px}
-  a{color:#e05e00}
+  a{color:#d64a00}
   label{display:block;margin-bottom:6px;font-weight:600}
   input{padding:8px 10px;border:1px solid #ddd;border-radius:8px;font:inherit}
-  button{padding:8px 14px;border:0;border-radius:8px;background:#ff8000;color:#1d1b17;font:inherit;cursor:pointer}
+  button{padding:8px 14px;border:0;border-radius:8px;background:#ff5300;color:#121212;font:inherit;cursor:pointer}
 </style>
 </head><body>${body}</body></html>`;
 }
@@ -471,6 +491,24 @@ function assembleHeadline() {
   });
 }
 
+/* ═══════════════ Aparición al hacer scroll ═══════════════ */
+function bindReveal() {
+  if (!('IntersectionObserver' in window)) return;
+  const targets = $$('.section-head, .playground, .cards-title, .cards .card, .docs .doc');
+  targets.forEach((el, i) => {
+    el.classList.add('reveal');
+    if (el.matches('.cards .card')) el.style.transitionDelay = ((i % 4) * 60) + 'ms';
+  });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      io.unobserve(entry.target);
+    });
+  }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach((el) => io.observe(el));
+}
+
 /* ═══════════════ Inicio ═══════════════ */
 function init() {
   assembleHeadline();
@@ -482,6 +520,7 @@ function init() {
   renderCards('#cards-html', HTML_CARDS);
   renderCards('#cards-css', CSS_CARDS);
   renderCards('#cards-js', JS_CARDS);
+  bindReveal();
 
   // HTML
   renderLessons('#html-lessons', HTML_LESSONS, (l) => {

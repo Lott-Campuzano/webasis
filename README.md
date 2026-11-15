@@ -20,10 +20,18 @@ No necesita instalación ni servidor: abre `index.html` en cualquier navegador
 
 ## Diseño
 
-- **Tipografía**: JetBrains Mono para titulares, Helvetica para textos.
-- **Colores**: blanco hueso, negro humo y naranja papaya (`#ff8000`), sin estrellitas — solo patrones ASCII.
+Estética **Teenage Engineering** — primo hermano de [OC-1 STUDIO](https://github.com/Lott-Campuzano/oc1-studio) —
+manteniendo el espíritu editorial de revista:
+
+- **Tipografía**: JetBrains Mono para titulares, etiquetas y texto resaltado; Helvetica para el resto.
+- **Los 4 acentos del OP-1**: naranja `#ff5300`, azul `#00a8ff`, verde `#00d26a` y blanco `#f0f0f0`, sobre blanco hueso y tinta grafito. Puntos de color como marcadores y teclas `html/css/js/docs` estilo OP-1 en la portada.
+- **Tira de 16 pasos** en CSS puro que late como el secuenciador de OC-1.
+- **Temas AUTO → DARK → LIGHT**: en `AUTO` la página sigue `prefers-color-scheme` y reacciona en vivo cuando cambias la apariencia de tu sistema (botón en la esquina, persistente).
+- **Aparición al hacer scroll** con `IntersectionObserver`; respeta `prefers-reduced-motion`.
 - **Personalización**: tema, acento, tipografía, esquinas y tamaño base; todo se guarda en `localStorage`.
-- Los editores y el estilo del playground también se autoguardan.
+- Cero dependencias, cero build: ábrelo y funciona.
+
+Los editores y el estilo del playground también se autoguardan.
 
 ## Estructura
 
