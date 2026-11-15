@@ -114,106 +114,6 @@ function bindSettings() {
   });
 }
 
-/* ═══════════════ Audio (síntesis del navegador) ═══════════════ */
-const synth = window.speechSynthesis || null;
-
-function pickVoice() {
-  if (!synth) return null;
-  return synth.getVoices().find((v) => (v.lang || '').toLowerCase().startsWith('es')) || null;
-}
-
-function setSpeakingUI(on) { const b = $('#stop-audio'); if (b) b.hidden = !on; }
-
-function speak(text) {
-  if (!synth) { toast('Tu navegador no soporta audio de síntesis 😅'); return; }
-  synth.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  const v = pickVoice();
-  if (v) { u.voice = v; u.lang = v.lang; } else { u.lang = 'es-ES'; }
-  u.rate = 1.04; u.pitch = 1;
-  u.onend = () => setSpeakingUI(false);
-  u.onerror = () => setSpeakingUI(false);
-  synth.speak(u);
-  setSpeakingUI(true);
-}
-
-function bindAudio() {
-  $('#stop-audio').addEventListener('click', () => { if (synth) synth.cancel(); });
-  $$('[data-say]').forEach((b) => b.addEventListener('click', () => speak(b.dataset.say)));
-  document.addEventListener('visibilitychange', () => { if (document.hidden && synth) synth.cancel(); });
-}
-
-/* ═══════════════ Tarjetas de propiedades ═══════════════ */
-const HTML_CARDS = [
-  { t: 'div · la caja', d: 'Un contenedor invisible. Agrupa contenido: cajas dentro de cajas, como capas de Photoshop.', ex: '<div class="tarjeta">\n  <h2>Hola</h2>\n  <p>Soy una tarjeta</p>\n</div>' },
-  { t: 'h1–h6 · títulos', d: 'Marcan la jerarquía del contenido, como un índice. Usa un solo h1 por página y baja de nivel en orden.', ex: '<h1>Título principal</h1>\n<h2>Subtítulo</h2>\n<h3>Detalle</h3>' },
-  { t: 'p · párrafo', d: 'Un bloque de texto. El navegador le da espacio antes y después automáticamente.', ex: '<p>Escribir en la web es así de simple.</p>' },
-  { t: 'a · enlace', d: 'El alma de la web: conecta páginas. href es el destino; el texto describe a dónde se llega.', ex: '<a href="https://developer.mozilla.org" target="_blank" rel="noopener">Visitar MDN</a>' },
-  { t: 'img · imagen', d: 'Muestra una imagen. src es la ruta; alt, la descripción para quienes no pueden verla.', ex: '<img src="foto.jpg" alt="Un gato dormido sobre un teclado">' },
-  { t: 'button · botón', d: 'Un botón pide una acción: enviar, abrir, borrar. Por sí solo no hace nada; JavaScript lo activa.', ex: '<button type="button">Cópiame</button>' },
-  { t: 'ul y li · listas', d: 'Las listas agrupan elementos relacionados: pasos, características, enlaces de un menú.', ex: '<ul>\n  <li>Investigar</li>\n  <li>Diseñar</li>\n  <li>Programar</li>\n</ul>' },
-  { t: 'input · campos', d: 'Los formularios recogen datos del usuario. El atributo type cambia su comportamiento: texto, email, color, fecha…', ex: '<label for="correo">Tu correo</label>\n<input id="correo" type="email" placeholder="hola@correo.com">' },
-];
-
-const CSS_CARDS = [
-  { t: 'color', d: 'El color del texto. Acepta nombres (tomato), hex (#ff5c8a) o rgb(). El contraste con el fondo es clave para leer bien.', ex: 'p {\n  color: #ff5c8a;\n}' },
-  { t: 'background', d: 'El fondo de un elemento: color sólido, degradado o imagen. Es el lienzo sobre el que diseñas.', ex: 'button {\n  background: linear-gradient(135deg, #ff5300, #00a8ff);\n}' },
-  { t: 'font-family y font-size', d: 'La tipografía: familia y tamaño. Ojo: botones e inputs no heredan la fuente del body.', ex: 'body {\n  font-family: system-ui, sans-serif;\n  font-size: 16px;\n}' },
-  { t: 'padding vs margin', d: 'padding es el aire dentro de la caja; margin, el aire fuera, entre cajas.', ex: '.tarjeta {\n  padding: 24px;   /* dentro */\n  margin: 32px 0;  /* fuera */\n}' },
-  { t: 'border-radius', d: 'Redondea las esquinas. Con un valor muy grande (999px) conviertes un rectángulo en una píldora.', ex: 'button {\n  border-radius: 999px;\n}' },
-  { t: 'box-shadow', d: 'Sombra con desplazamiento X e Y, desenfoque y color. Usada con suavidad hace que un elemento parezca flotar.', ex: '.tarjeta {\n  box-shadow: 0 10px 30px rgba(0, 0, 0, .12);\n}' },
-  { t: 'display: flex', d: 'Un contenedor flexible: sus hijos en fila o columna, alineados con justify-content y align-items.', ex: '.menu {\n  display: flex;\n  gap: 16px;\n  align-items: center;\n}' },
-  { t: 'display: grid', d: 'Layout en dos dimensiones: define columnas y filas de una vez. Ideal para galerías y mosaicos.', ex: '.galeria {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 12px;\n}' },
-  { t: 'transition', d: 'Anima con suavidad los cambios de estado (por ejemplo, un hover). Sin transition, todo cambia de golpe.', ex: 'button {\n  transition: transform .3s ease, box-shadow .3s ease;\n}' },
-  { t: ':hover', d: 'Una pseudo-clase: se activa cuando el cursor está encima. El feedback favorito de todo diseñador.', ex: 'button:hover {\n  transform: translateY(-3px);\n}' },
-];
-
-const JS_CARDS = [
-  { t: 'let y const · variables', d: 'Cajas con nombre para guardar valores. const no cambia; let sí.', ex: "const nombre = 'Ada';\nlet visitas = 0;\nvisitas = visitas + 1;" },
-  { t: 'tipos de datos', d: 'Texto (string), números (number), verdadero/falso (boolean), listas (array) y más. typeof te dice qué es cada cosa.', ex: "console.log(typeof 'hola'); // string\nconsole.log(typeof 42);     // number" },
-  { t: 'funciones', d: 'Recetas reutilizables: reciben datos (parámetros) y devuelven un resultado. Escribe una vez, usa mil veces.', ex: "function saludo(quien) {\n  return 'Hola, ' + quien;\n}\nconsole.log(saludo('Ada'));" },
-  { t: 'if / else · decisiones', d: 'El código toma caminos distintos según una condición. Para comparar usa === y evita sorpresas.', ex: "if (modo === 'oscuro') {\n  console.log('Modo oscuro');\n} else {\n  console.log('Modo claro');\n}" },
-  { t: 'for · bucles', d: 'Repite acciones por cada elemento de una lista. Ideal para pintar 30 tarjetas sin escribirlas 30 veces.', ex: "const colores = ['violeta', 'rosa'];\nfor (const c of colores) {\n  console.log(c);\n}" },
-  { t: 'arrays · listas', d: 'Colecciones ordenadas de valores. push añade, length cuenta y con map transformas cada elemento.', ex: "const ideas = ['moodboard', 'wireframe'];\nideas.push('prototipo');\nconsole.log(ideas.length); // 3" },
-  { t: 'objetos · fichas', d: 'Agrupan datos relacionados bajo un mismo nombre, como una ficha de usuario con sus propiedades.', ex: "const user = { nombre: 'Ada', rol: 'diseñadora' };\nconsole.log(user.nombre);" },
-  { t: 'querySelector · el DOM', d: 'El DOM es tu HTML visto por JavaScript. querySelector encuentra un elemento para leerlo o cambiarlo.', ex: "const titulo = document.querySelector('h1');\ntitulo.textContent = 'Nuevo título';" },
-  { t: 'addEventListener · eventos', d: 'El puente entre diseño e interacción: escucha clics, teclas, scroll… y responde con una función.', ex: "boton.addEventListener('click', () => {\n  console.log('¡Click!');\n});" },
-];
-
-function cardEl(card) {
-  const art = document.createElement('article');
-  art.className = 'card';
-
-  const head = document.createElement('header');
-  head.className = 'card-head';
-  const h4 = document.createElement('h4');
-  h4.textContent = card.t;
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'listen';
-  btn.title = 'Escuchar explicación';
-  btn.setAttribute('aria-label', 'Escuchar: ' + card.t);
-  btn.textContent = '🔊';
-  btn.addEventListener('click', () => speak(card.t + '. ' + card.d));
-  head.append(h4, btn);
-
-  const p = document.createElement('p');
-  p.textContent = card.d;
-
-  const pre = document.createElement('pre');
-  const code = document.createElement('code');
-  code.textContent = card.ex;
-  pre.append(code);
-
-  art.append(head, p, pre);
-  return art;
-}
-
-function renderCards(sel, items) {
-  const box = $(sel);
-  items.forEach((c) => box.appendChild(cardEl(c)));
-}
-
 /* ═══════════════ Lecciones ═══════════════ */
 const HTML_LESSONS = [
   { name: '1 · primer texto', code: '<h1>Hola, mundo 👋</h1>\n<p>Este es mi primer párrafo escrito en HTML. Cambia el texto y mira la vista previa.</p>' },
@@ -494,10 +394,10 @@ function assembleHeadline() {
 /* ═══════════════ Aparición al hacer scroll ═══════════════ */
 function bindReveal() {
   if (!('IntersectionObserver' in window)) return;
-  const targets = $$('.section-head, .playground, .cards-title, .cards .card, .docs .doc');
+  const targets = $$('.section-head, .playground, .docs .doc');
   targets.forEach((el, i) => {
     el.classList.add('reveal');
-    if (el.matches('.cards .card')) el.style.transitionDelay = ((i % 4) * 60) + 'ms';
+    if (el.matches('.docs .doc')) el.style.transitionDelay = ((i % 4) * 60) + 'ms';
   });
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -515,11 +415,6 @@ function init() {
   loadSettings();
   applySettings();
   bindSettings();
-  bindAudio();
-
-  renderCards('#cards-html', HTML_CARDS);
-  renderCards('#cards-css', CSS_CARDS);
-  renderCards('#cards-js', JS_CARDS);
   bindReveal();
 
   // HTML

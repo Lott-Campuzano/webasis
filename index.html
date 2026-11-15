@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>weBasis · HTML, CSS y JavaScript para diseñadores</title>
-  <meta name="description" content="Un laboratorio minimalista para que diseñadores experimenten con HTML, CSS y JavaScript, con explicaciones en tarjetas y audio.">
+  <meta name="description" content="Un laboratorio minimalista para que diseñadores experimenten con HTML, CSS y JavaScript: edita y mira el resultado al instante.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23121212'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23ff5300'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=6">
-  <script defer src="app.js?v=2"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
 </head>
 <body>
 
@@ -24,7 +24,6 @@
       <a href="#docs" data-section="docs">Aprender</a>
     </nav>
     <div class="topbar-actions">
-      <button id="stop-audio" class="btn small ghost" type="button" hidden>⏹ Detener audio</button>
       <button id="theme-cycle" class="theme-btn" type="button" title="apariencia: sigue al sistema">
         <span class="dot dot-green" id="theme-dot"></span><span id="theme-label">AUTO</span>
       </button>
@@ -40,14 +39,6 @@
     <h1>Un sitio seguro para <em>romper</em> cosas</h1>
     <div class="hero-actions">
       <a class="btn" href="#html">Empezar con HTML ↓</a>
-      <button class="btn ghost" type="button" data-say="Te doy la bienvenida a weBasis, un espacio para que experimentes con HTML, CSS y JavaScript. Edita, rompe, repara y repite: así se aprende.">🔊 Escuchar intro</button>
-    </div>
-
-    <div class="color-keys">
-      <a class="key key-orange" href="#html">html</a>
-      <a class="key key-blue" href="#css">css</a>
-      <a class="key key-yellow" href="#js">js</a>
-      <a class="key key-white" href="#docs">docs</a>
     </div>
   </section>
 
@@ -57,7 +48,6 @@
       <p class="section-tag"><span class="dot dot-orange"></span>01 · ESTRUCTURA</p>
       <h2>HTML · la estructura</h2>
       <p class="lead">Las piezas de tu página. Edita a la izquierda, mira el resultado a la derecha.</p>
-      <button class="listen-mini" type="button" data-say="HTML es el esqueleto de la web. Con etiquetas describes la estructura: cajas, títulos, párrafos, imágenes, enlaces y botones. El navegador lee esas etiquetas y construye la página. Edita el código y observa la vista previa en vivo.">🔊 ¿Qué es HTML?</button>
     </header>
 
     <div class="playground">
@@ -76,9 +66,6 @@
         <iframe id="html-preview" sandbox="allow-scripts" title="Vista previa de HTML"></iframe>
       </div>
     </div>
-
-    <h3 class="cards-title">Tarjetas de propiedades <small>— pulsa 🔊 para escuchar</small></h3>
-    <div class="cards" id="cards-html"></div>
   </section>
 
   <!-- ══════════ CSS ══════════ -->
@@ -87,7 +74,6 @@
       <p class="section-tag"><span class="dot dot-blue"></span>02 · ESTILO</p>
       <h2>CSS · el estilo</h2>
       <p class="lead">Mueve los controles y el código se escribe solo: léelo y apréndelo.</p>
-      <button class="listen-mini" type="button" data-say="CSS es el lenguaje del estilo. Con reglas como color, padding o border-radius le dices al navegador cómo se ve cada pieza: colores, tipografía, espacios, sombras y movimiento. Mueve los controles y el código se escribe solo: así aprendes leyendo.">🔊 ¿Qué es CSS?</button>
     </header>
 
     <div class="playground css-playground">
@@ -149,9 +135,6 @@
         </div>
       </div>
     </div>
-
-    <h3 class="cards-title">Tarjetas de propiedades <small>— pulsa 🔊 para escuchar</small></h3>
-    <div class="cards" id="cards-css"></div>
   </section>
 
   <!-- ══════════ JavaScript ══════════ -->
@@ -160,7 +143,6 @@
       <p class="section-tag"><span class="dot dot-yellow"></span>03 · COMPORTAMIENTO</p>
       <h2>JavaScript · el comportamiento</h2>
       <p class="lead">El lenguaje que piensa: guarda datos, decide y reacciona. Escribe y pulsa ▶ Ejecutar.</p>
-      <button class="listen-mini" type="button" data-say="JavaScript es el comportamiento. Es el único de los tres lenguajes que piensa: guarda datos, toma decisiones y reacciona cuando alguien hace clic. Escribe código y pulsa ejecutar; los resultados aparecen en la consola y los elementos en la zona de pruebas.">🔊 ¿Qué es JavaScript?</button>
     </header>
 
     <div class="playground">
@@ -190,9 +172,6 @@
         </div>
       </div>
     </div>
-
-    <h3 class="cards-title">Tarjetas de conceptos <small>— pulsa 🔊 para escuchar</small></h3>
-    <div class="cards" id="cards-js"></div>
   </section>
 
   <!-- ══════════ Documentación ══════════ -->
