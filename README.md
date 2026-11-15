@@ -24,7 +24,7 @@ Estética **Teenage Engineering** — primo hermano de [OC-1 STUDIO](https://git
 manteniendo el espíritu editorial de revista:
 
 - **Tipografía**: JetBrains Mono para titulares, etiquetas y texto resaltado; Helvetica para el resto.
-- **Los 4 acentos del OP-1**: naranja `#ff5300`, azul `#00a8ff`, verde `#00d26a` y blanco `#f0f0f0`, sobre blanco hueso y tinta grafito. Puntos de color como marcadores y teclas `html/css/js/docs` estilo OP-1 en la portada.
+- **Los acentos del OP-1**: naranja `#ff5300`, azul `#00a8ff`, amarillo `#ffd400` para JavaScript y blanco `#f0f0f0`, sobre blanco hueso y tinta grafito. Puntos de color como marcadores y teclas `html/css/js/docs` estilo OP-1 en la portada.
 - **Temas AUTO → DARK → LIGHT**: en `AUTO` la página sigue `prefers-color-scheme` y reacciona en vivo cuando cambias la apariencia de tu sistema (botón en la esquina, persistente).
 - **Aparición al hacer scroll** con `IntersectionObserver`; respeta `prefers-reduced-motion`.
 - **Personalización**: tema, acento, tipografía, esquinas y tamaño base; todo se guarda en `localStorage`.

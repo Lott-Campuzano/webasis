@@ -9,6 +9,7 @@
   --on-accent: #121212;
   --te-blue: #00a8ff;
   --te-green: #00d26a;
+  --te-yellow: #ffd400;
   --te-white: #f0f0f0;
   --bg: #f3f0e8;       /* blanco hueso */
   --bg-soft: #eae6da;
@@ -112,10 +113,9 @@ strong, b, .btn, .listen-mini, .chip, .tag, .doc-name { font-family: var(--font-
 .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: none; }
 .dot-orange { background: var(--accent); }
 .dot-blue { background: var(--te-blue); }
+.dot-yellow { background: var(--te-yellow); }
 .dot-green { background: var(--te-green); }
 .dot-white { background: var(--te-white); box-shadow: 0 0 0 1px var(--border); }
-.pulse-dot { animation: dotpulse 1.6s ease-in-out infinite; }
-@keyframes dotpulse { 50% { opacity: .35; } }
 .nav { display: flex; gap: 2px; margin-inline: auto; }
 .nav a {
   padding: 6px 12px; border-radius: 999px; text-decoration: none;
@@ -171,7 +171,7 @@ strong, b, .btn, .listen-mini, .chip, .tag, .doc-name { font-family: var(--font-
 .key::before { content: '● '; }
 .key-orange::before { color: var(--accent); }
 .key-blue::before { color: var(--te-blue); }
-.key-green::before { color: var(--te-green); }
+.key-yellow::before { color: var(--te-yellow); }
 .key-white::before {
   color: var(--te-white);
   text-shadow: 1px 0 0 var(--border), -1px 0 0 var(--border), 0 1px 0 var(--border), 0 -1px 0 var(--border);
