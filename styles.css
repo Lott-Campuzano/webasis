@@ -106,10 +106,8 @@ strong, b, .btn, .listen-mini, .chip, .tag, .doc-name { font-family: var(--font-
   font-weight: 700; font-size: 16.5px; letter-spacing: -.02em;
   color: var(--text); text-decoration: none; white-space: nowrap;
 }
-.brand { display: inline-flex; align-items: center; gap: 9px; }
-.brand .dot { width: 10px; height: 10px; }
 
-/* puntos de color · los 4 acentos del OP-1 */
+/* puntos de color · los acentos del OP-1 */
 .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: none; }
 .dot-orange { background: var(--accent); }
 .dot-blue { background: var(--te-blue); }
